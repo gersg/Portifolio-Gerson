@@ -1,0 +1,363 @@
+.about-me-section {
+  padding: 90px 24px;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 60px 16px;
+  }
+}
+
+.about-me-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.about-narrative-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.85fr;
+  gap: 48px;
+  align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* Main Story Column */
+.about-story-col {
+  text-align: left;
+
+  .story-subtitle {
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 20px 0;
+    color: #f1f5f9;
+
+    .light-mode & {
+      color: #0f172a;
+    }
+  }
+
+  p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #94a3b8;
+    margin-bottom: 20px;
+
+    strong {
+      color: #e2e8f0;
+    }
+
+    em {
+      color: #818cf8;
+      font-style: normal;
+    }
+
+    .light-mode & {
+      color: #475569;
+
+      strong {
+        color: #0f172a;
+      }
+
+      em {
+        color: #4f46e5;
+      }
+    }
+  }
+}
+
+/* Triad Highlight Box (Sales + Marketing + Systems) */
+.triad-highlight-box {
+  margin: 36px 0;
+  padding: 28px;
+  border-radius: 16px;
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+
+  .light-mode & {
+    background: #f0f4ff;
+    border: 1px solid #c7d2fe;
+  }
+
+  .triad-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: #c7d2fe;
+
+    .light-mode & {
+      color: #3730a3;
+    }
+  }
+
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+}
+
+.triad-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.triad-card {
+  padding: 16px;
+  border-radius: 10px;
+  background: rgba(11, 15, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  .light-mode & {
+    background: #ffffff;
+    border: 1px solid #e0e7ff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  }
+
+  .triad-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    strong {
+      font-size: 0.88rem;
+      color: #f8fafc;
+
+      .light-mode & {
+        color: #1e1b4b;
+      }
+    }
+  }
+
+  .triad-icon {
+    font-size: 20px;
+    color: #818cf8;
+
+    .light-mode & {
+      color: #4f46e5;
+    }
+  }
+
+  p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin: 0;
+    color: #94a3b8;
+
+    .light-mode & {
+      color: #475569;
+    }
+  }
+}
+
+/* TATUi TECH & Konnekti Spotlight */
+.tatui-konnekti-spotlight {
+  padding: 26px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+
+  .light-mode & {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  }
+}
+
+.spotlight-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  margin-bottom: 14px;
+}
+
+.spotlight-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+
+  h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 2px 0;
+    color: #ffffff;
+
+    .light-mode & {
+      color: #0f172a;
+    }
+  }
+
+  span {
+    font-size: 0.82rem;
+    color: #818cf8;
+    font-weight: 600;
+
+    .light-mode & {
+      color: #4f46e5;
+    }
+  }
+}
+
+.tatui-logo-small {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 4px;
+}
+
+/* Stats Sidebar Column */
+.about-stats-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stats-card {
+  padding: 20px 24px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: left;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(99, 102, 241, 0.3);
+  }
+
+  .light-mode & {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+
+    &:hover {
+      border-color: #cbd5e1;
+    }
+  }
+}
+
+.stat-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #818cf8;
+  line-height: 1.1;
+  margin-bottom: 4px;
+
+  .light-mode & {
+    color: #4f46e5;
+  }
+}
+
+.stat-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 6px;
+
+  .light-mode & {
+    color: #0f172a;
+  }
+}
+
+.stat-desc {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+
+  .light-mode & {
+    color: #64748b;
+  }
+}
+
+/* Principles Box */
+.about-principles-box {
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: left;
+
+  .light-mode & {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+  }
+
+  h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    color: #f1f5f9;
+
+    .light-mode & {
+      color: #0f172a;
+    }
+  }
+}
+
+.principles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .principle-icon {
+    font-size: 22px;
+    color: #818cf8;
+    margin-top: 2px;
+    flex-shrink: 0;
+
+    .light-mode & {
+      color: #4f46e5;
+    }
+  }
+
+  strong {
+    display: block;
+    font-size: 0.88rem;
+    color: #f8fafc;
+    margin-bottom: 2px;
+
+    .light-mode & {
+      color: #0f172a;
+    }
+  }
+
+  span {
+    display: block;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    line-height: 1.35;
+
+    .light-mode & {
+      color: #64748b;
+    }
+  }
+}

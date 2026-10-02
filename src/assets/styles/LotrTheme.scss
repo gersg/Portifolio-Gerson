@@ -1,0 +1,2510 @@
+/* ==========================================================================
+   Lord of the Rings (O Senhor dos Anéis) Thematic Game Styles
+   ========================================================================== */
+
+/* Typography variables */
+$font-cinzel: 'Cinzel', serif;
+$font-cinzel-dec: 'Cinzel Decorative', serif;
+$font-body: 'Plus Jakarta Sans', sans-serif;
+
+/* Palette */
+$gold-primary: #d4af37;
+$gold-bright: #fbbf24;
+$gold-amber: #f59e0b;
+$gold-glow: rgba(212, 175, 55, 0.35);
+
+$bg-deep: #070a10;
+$bg-slate: #0d121c;
+$bg-card: #121824;
+$bg-card-hover: #172030;
+
+$mithril: #cbd5e1;
+$emerald: #10b981;
+$crimson: #ef4444;
+
+.lotr-game-root {
+  min-height: 100vh;
+  background-color: $bg-deep;
+  color: #e2e8f0;
+  font-family: $font-body;
+  position: relative;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+
+  /* Global background texture & subtle runes ambiance */
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(16, 185, 129, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 70%, rgba(239, 68, 68, 0.04) 0%, transparent 50%);
+
+  /* Ring Surge Active (When user toggles the One Ring) */
+  &.ring-surge-active {
+    box-shadow: inset 0 0 100px rgba(212, 175, 55, 0.25);
+
+    .tengwar-inscription-text {
+      fill: #fef08a !important;
+      filter: drop-shadow(0 0 12px #eab308) drop-shadow(0 0 24px #ca8a04);
+    }
+
+    .lotr-ring-glow-halo {
+      box-shadow: 0 0 50px 15px rgba(234, 179, 8, 0.6) !important;
+    }
+
+    .lotr-section-heading {
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.45);
+    }
+  }
+}
+
+/* ==========================================================================
+   1. LOTR HUD Header
+   ========================================================================== */
+.lotr-hud-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(7, 10, 16, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.lotr-hud-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Player Status Left */
+.lotr-player-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.18s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.lotr-player-avatar-ring {
+  position: relative;
+  width: 44px;
+  height: 44px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid $gold-primary;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+  }
+
+  .lotr-level-tag {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    font-size: 0.62rem;
+    font-weight: 800;
+    font-family: $font-cinzel;
+    background: $gold-primary;
+    color: #000;
+    padding: 1px 4px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.lotr-player-meta {
+  text-align: left;
+}
+
+.lotr-player-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lotr-player-name {
+  font-family: $font-cinzel;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.lotr-class-tag {
+  font-size: 0.72rem;
+  color: $gold-primary;
+  font-weight: 600;
+}
+
+.lotr-bars-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.lotr-bar {
+  width: 72px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  &.hp-bar .bar-fill {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+  }
+
+  &.mp-bar .bar-fill {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  }
+
+  .bar-label {
+    display: none;
+  }
+}
+
+/* Realm Nav Center */
+.lotr-realm-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  @media (max-width: 980px) {
+    display: none;
+  }
+}
+
+.realm-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: $font-cinzel;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.18s ease;
+
+  &:hover {
+    color: $gold-primary;
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .rune-char {
+    font-size: 0.9rem;
+  }
+}
+
+/* Controls Right */
+.lotr-hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud-control-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: $font-cinzel;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &.ring-btn {
+    border-color: rgba(212, 175, 55, 0.4);
+    color: $gold-primary;
+
+    &.active {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: $gold-primary;
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.5);
+      color: #fff;
+    }
+  }
+
+  &.sound-btn {
+    padding: 6px 8px;
+  }
+
+  @media (max-width: 640px) {
+    .btn-txt {
+      display: none;
+    }
+  }
+}
+
+.hud-cta-alliance {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-family: $font-cinzel;
+  font-weight: 700;
+  font-size: 0.84rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+  }
+
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   2. LOTR Hero Section
+   ========================================================================== */
+.lotr-hero-section {
+  position: relative;
+  padding: 80px 24px 70px 24px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.lotr-mist-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.12) 0%, transparent 60%);
+  filter: blur(40px);
+}
+
+.lotr-hero-content-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Animated One Ring Visual */
+.lotr-ring-wrapper {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lotr-ring-inscription-circle {
+  position: absolute;
+  inset: -15px;
+  animation: rotateRing 45s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.lotr-ring-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.tengwar-inscription-text {
+  font-family: $font-cinzel-dec;
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  fill: #d4af37;
+  text-transform: uppercase;
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.7));
+  transition: all 0.3s ease;
+}
+
+.lotr-hero-avatar-frame {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.lotr-hero-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid $gold-primary;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+.lotr-ring-glow-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  pointer-events: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.lotr-avatar-badge {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111827;
+  color: $gold-primary;
+  border: 1px solid $gold-primary;
+  font-family: $font-cinzel;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Hero Typography */
+.lotr-hero-eyebrow {
+  margin-bottom: 14px;
+}
+
+.lotr-fellowship-kicker {
+  display: inline-block;
+  font-family: $font-cinzel;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $gold-bright;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.lotr-hero-title {
+  font-family: $font-cinzel-dec;
+  font-size: 3.8rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0 0 14px 0;
+  background: linear-gradient(135deg, #ffffff 30%, #d4af37 80%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media (max-width: 768px) {
+    font-size: 2.6rem;
+  }
+}
+
+.lotr-hero-subtitle {
+  font-family: $font-cinzel;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  line-height: 1.4;
+  margin: 0 0 20px 0;
+
+  span {
+    color: $gold-primary;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+.lotr-hero-lore {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #94a3b8;
+  max-width: 820px;
+  margin: 0 auto 32px auto;
+
+  strong {
+    color: #f1f5f9;
+  }
+}
+
+/* Stat Pills */
+.lotr-stat-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.lotr-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left;
+  transition: transform 0.18s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .pill-rune {
+    font-size: 1.4rem;
+  }
+
+  strong {
+    display: block;
+    font-family: $font-cinzel;
+    font-size: 0.9rem;
+    color: #ffffff;
+  }
+
+  small {
+    display: block;
+    font-size: 0.76rem;
+    color: #94a3b8;
+  }
+
+  &.gold {
+    border-color: rgba(212, 175, 55, 0.35);
+    background: rgba(212, 175, 55, 0.05);
+  }
+
+  &.mithril {
+    border-color: rgba(203, 213, 225, 0.35);
+    background: rgba(203, 213, 225, 0.05);
+  }
+
+  &.emerald {
+    border-color: rgba(16, 185, 129, 0.35);
+    background: rgba(16, 185, 129, 0.05);
+  }
+}
+
+/* Action Buttons */
+.lotr-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.lotr-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-family: $font-cinzel;
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #d4af37 0%, #b45309 100%);
+  color: #000000 !important;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 26px rgba(212, 175, 55, 0.6);
+  }
+}
+
+.lotr-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-family: $font-cinzel;
+  font-weight: 700;
+  font-size: 0.92rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(212, 175, 55, 0.15);
+    color: $gold-bright !important;
+    transform: translateY(-2px);
+  }
+}
+
+.lotr-btn-dice {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-family: $font-cinzel;
+  font-weight: 700;
+  font-size: 0.92rem;
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc !important;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(168, 85, 247, 0.25);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+  }
+}
+
+/* Social Runes */
+.lotr-social-runes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.runes-label {
+  font-family: $font-cinzel;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 0.08em;
+}
+
+.runes-links-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rune-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-family: $font-cinzel;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: rgba(212, 175, 55, 0.15);
+    color: $gold-bright;
+    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &.whatsapp:hover {
+    background: rgba(37, 211, 102, 0.15);
+    color: #25d366;
+    border-color: rgba(37, 211, 102, 0.4);
+  }
+}
+
+/* ==========================================================================
+   Shared Section Headers & Dividers
+   ========================================================================== */
+.lotr-section {
+  padding: 85px 24px;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 60px 16px;
+  }
+}
+
+.lotr-inner-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.lotr-section-title-wrap {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 48px auto;
+}
+
+.lotr-gold-kicker {
+  display: inline-flex;
+  align-items: center;
+  font-family: $font-cinzel;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $gold-primary;
+  margin-bottom: 8px;
+}
+
+.lotr-section-heading {
+  font-family: $font-cinzel-dec;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px 0;
+  color: #ffffff;
+
+  @media (max-width: 768px) {
+    font-size: 1.85rem;
+  }
+}
+
+.lotr-section-lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #94a3b8;
+  margin: 0 0 16px 0;
+}
+
+.lotr-rune-divider {
+  font-family: $font-cinzel;
+  color: $gold-primary;
+  letter-spacing: 0.25em;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   3. Interactive World Map Section
+   ========================================================================== */
+.lotr-parchment-canvas {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 20px;
+  background: #0f1624;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  margin-bottom: 28px;
+
+  @media (max-width: 768px) {
+    height: 320px;
+  }
+}
+
+.map-texture-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 75% 65%, rgba(239, 68, 68, 0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.map-path-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.map-path-dash {
+  animation: dashAnim 30s linear infinite;
+}
+
+@keyframes dashAnim {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+.map-realm-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translate(-50%, -55%);
+  }
+
+  &.selected {
+    .node-icon-frame {
+      background: $gold-primary;
+      color: #000;
+      border-color: #ffffff;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+    }
+
+    .node-label-plate {
+      background: #1e293b;
+      border-color: $gold-primary;
+      color: $gold-bright;
+    }
+  }
+}
+
+.node-marker-pulse {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.25);
+  animation: mapPulse 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes mapPulse {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+}
+
+.node-icon-frame {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #111827;
+  color: $gold-primary;
+  border: 2px solid $gold-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.node-label-plate {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(7, 10, 16, 0.88);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  color: #f1f5f9;
+  font-family: $font-cinzel;
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  .node-step-num {
+    color: $gold-primary;
+  }
+}
+
+/* Realm Lore Inspection Banner */
+.lotr-realm-lore-banner {
+  background: #101622;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.lore-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(212, 175, 55, 0.12);
+  color: $gold-primary;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg {
+    font-size: 30px;
+  }
+}
+
+.lore-content-box {
+  flex-grow: 1;
+}
+
+.lore-realm-badge {
+  font-family: $font-cinzel;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: $gold-primary;
+  margin-bottom: 4px;
+}
+
+.lore-realm-title {
+  font-family: $font-cinzel;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.lore-realm-text {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.lore-travel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: $font-cinzel;
+  font-weight: 700;
+  font-size: 0.88rem;
+  background: rgba(212, 175, 55, 0.15);
+  color: $gold-bright;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  white-space: nowrap;
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: $gold-primary;
+    color: #000;
+  }
+}
+
+/* ==========================================================================
+   4. The Shire (Sobre Mim) Section
+   ========================================================================== */
+.lotr-shire-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr;
+  gap: 40px;
+  text-align: left;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lotr-parchment-scroll {
+  background: #111724;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 18px;
+  padding: 36px 32px;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+
+  .scroll-heading {
+    font-family: $font-cinzel;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 18px 0;
+  }
+
+  .scroll-paragraph {
+    font-size: 1.02rem;
+    line-height: 1.8;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+
+    strong {
+      color: #ffffff;
+    }
+
+    em {
+      color: $gold-primary;
+      font-style: normal;
+    }
+  }
+}
+
+/* The Sacred Triad Box */
+.lotr-triad-box {
+  margin: 32px 0;
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(212, 175, 55, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+
+  .triad-glow-title {
+    margin-bottom: 12px;
+
+    span {
+      font-family: $font-cinzel;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: $gold-primary;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    h4 {
+      font-family: $font-cinzel;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+  }
+
+  .triad-intro {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+}
+
+.triad-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.triad-pillar-card {
+  padding: 16px;
+  border-radius: 10px;
+  background: #0b0f17;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    strong {
+      font-family: $font-cinzel;
+      font-size: 0.85rem;
+      color: #ffffff;
+    }
+  }
+
+  .pillar-icon {
+    font-size: 20px;
+
+    &.gold { color: $gold-primary; }
+    &.mithril { color: #818cf8; }
+    &.emerald { color: #34d399; }
+  }
+
+  p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #94a3b8;
+    margin: 0;
+  }
+}
+
+/* Citadel Card (TATUi TECH) */
+.lotr-citadel-card {
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+
+  .citadel-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .citadel-crest {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: contain;
+    background: #ffffff;
+    padding: 3px;
+  }
+
+  .citadel-sub {
+    font-family: $font-cinzel;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: $gold-primary;
+    display: block;
+  }
+
+  .citadel-name {
+    font-family: $font-cinzel;
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .citadel-desc {
+    font-size: 0.94rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    margin: 0;
+
+    strong {
+      color: $gold-bright;
+    }
+  }
+}
+
+/* Shire Sidebar */
+.lotr-shire-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shire-stat-box {
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: #111724;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  text-align: left;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: $gold-primary;
+  }
+
+  .stat-glow-number {
+    font-family: $font-cinzel-dec;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: $gold-primary;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .stat-title {
+    font-family: $font-cinzel;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+/* ==========================================================================
+   5. Rivendell (Skills Grimoires) Section
+   ========================================================================== */
+.lotr-grimoire-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  text-align: left;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lotr-grimoire-card {
+  padding: 32px 28px;
+  border-radius: 18px;
+  background: #111724;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  transition: transform 0.22s ease, border-color 0.22s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &.elven-spell:hover { border-color: #3b82f6; }
+  &.royal-spell:hover { border-color: $gold-primary; }
+  &.mystic-spell:hover { border-color: #a855f7; }
+}
+
+.grimoire-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.grimoire-icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.35);
+  }
+
+  &.gold {
+    background: rgba(212, 175, 55, 0.15);
+    color: $gold-primary;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+  }
+
+  &.purple {
+    background: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.35);
+  }
+}
+
+.grimoire-discipline {
+  font-family: $font-cinzel;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: $gold-primary;
+  display: block;
+}
+
+.grimoire-title {
+  font-family: $font-cinzel;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 2px 0 0 0;
+}
+
+.grimoire-lore {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #94a3b8;
+  margin: 0 0 24px 0;
+  flex-grow: 1;
+}
+
+.grimoire-spells-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 18px;
+}
+
+.spells-subheading {
+  font-family: $font-cinzel;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #cbd5e1;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.runic-tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.rune-pill {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.15s ease;
+
+  &.blue:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+    border-color: rgba(59, 130, 246, 0.4);
+  }
+
+  &.gold:hover {
+    background: rgba(212, 175, 55, 0.2);
+    color: $gold-bright;
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  &.purple:hover {
+    background: rgba(168, 85, 247, 0.2);
+    color: #e9d5ff;
+    border-color: rgba(168, 85, 247, 0.4);
+  }
+}
+
+/* ==========================================================================
+   6. Minas Tirith (Chronicle / Timeline)
+   ========================================================================== */
+.lotr-medieval-timeline {
+  &::before {
+    background: rgba(212, 175, 55, 0.3) !important;
+  }
+}
+
+.lotr-timeline-seal {
+  display: inline-block;
+  font-family: $font-cinzel;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+
+  &.seal-gold {
+    background: rgba(212, 175, 55, 0.2);
+    color: $gold-bright;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+  }
+
+  &.seal-blue {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+  }
+
+  &.seal-green {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+  }
+
+  &.seal-orange {
+    background: rgba(249, 115, 22, 0.2);
+    color: #fdba74;
+    border: 1px solid rgba(249, 115, 22, 0.4);
+  }
+
+  &.seal-teal {
+    background: rgba(20, 184, 166, 0.2);
+    color: #5eead4;
+    border: 1px solid rgba(20, 184, 166, 0.4);
+  }
+}
+
+/* ==========================================================================
+   7. Mount Doom Forge (Artifacts RPG Grid)
+   ========================================================================== */
+.lotr-faction-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.faction-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-family: $font-cinzel;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.04);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+  }
+
+  &.active {
+    background: rgba(212, 175, 55, 0.2);
+    color: $gold-bright;
+    border-color: $gold-primary;
+    box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+  }
+}
+
+.lotr-artifacts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+
+  @media (max-width: 1080px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lotr-artifact-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111724;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &.mythical {
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+
+    &:hover {
+      box-shadow: 0 16px 40px rgba(212, 175, 55, 0.3);
+      border-color: $gold-bright;
+    }
+  }
+
+  &.legendary {
+    border-color: rgba(168, 85, 247, 0.4);
+
+    &:hover {
+      box-shadow: 0 16px 40px rgba(168, 85, 247, 0.25);
+      border-color: #c084fc;
+    }
+  }
+
+  &.epic {
+    border-color: rgba(59, 130, 246, 0.3);
+
+    &:hover {
+      box-shadow: 0 16px 40px rgba(59, 130, 246, 0.25);
+      border-color: #60a5fa;
+    }
+  }
+}
+
+.artifact-image-frame {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: #080c14;
+  overflow: hidden;
+}
+
+.artifact-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+
+  .lotr-artifact-card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.artifact-rarity-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: $font-cinzel;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  color: $gold-bright;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.artifact-award-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: rgba(234, 179, 8, 0.95);
+  color: #000;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.artifact-hover-reveal {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 10, 16, 0.65);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  span {
+    font-family: $font-cinzel;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(212, 175, 55, 0.85);
+    color: #000;
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+
+  .lotr-artifact-card:hover & {
+    opacity: 1;
+  }
+}
+
+.artifact-card-body {
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.artifact-meta-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  margin-bottom: 8px;
+}
+
+.artifact-realm-tag {
+  font-family: $font-cinzel;
+  font-weight: 700;
+  color: $gold-primary;
+}
+
+.meta-dot {
+  color: #64748b;
+}
+
+.artifact-year {
+  color: #94a3b8;
+}
+
+.artifact-card-title {
+  font-family: $font-cinzel;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.artifact-card-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #94a3b8;
+  margin: 0 0 16px 0;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.artifact-metrics-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+.artifact-mini-metric {
+  text-align: left;
+  strong {
+    display: block;
+    font-family: $font-cinzel;
+    font-size: 0.82rem;
+    color: $gold-bright;
+  }
+  small {
+    font-size: 0.68rem;
+    color: #94a3b8;
+  }
+}
+
+.artifact-tech-runes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.tech-rune-pill {
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.artifact-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  .artifact-role-lbl {
+    font-size: 0.76rem;
+    color: #94a3b8;
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .inspect-btn {
+    color: $gold-primary;
+    transition: transform 0.15s ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+/* ==========================================================================
+   8. Modals (Character Sheet & Artifact Inspection)
+   ========================================================================== */
+.lotr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 5, 8, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lotr-sheet-window,
+.lotr-inspect-window {
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  border-radius: 20px;
+  background: #0f1624;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideUp 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.lotr-sheet-close-btn,
+.lotr-modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: #ef4444;
+    transform: rotate(90deg);
+  }
+}
+
+.lotr-sheet-scrollable,
+.inspect-scroll-body {
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+/* Character Sheet Details */
+.lotr-sheet-header {
+  padding: 32px 30px 18px 30px;
+  text-align: left;
+}
+
+.lotr-sheet-badge {
+  font-family: $font-cinzel;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: $gold-primary;
+  margin-bottom: 6px;
+}
+
+.lotr-sheet-title {
+  font-family: $font-cinzel-dec;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.lotr-sheet-class {
+  font-family: $font-cinzel;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $gold-bright;
+  margin: 0 0 10px 0;
+}
+
+.lotr-sheet-guild {
+  display: flex;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: #94a3b8;
+}
+
+.lotr-sheet-divider {
+  font-family: $font-cinzel;
+  color: $gold-primary;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.lotr-attributes-section,
+.lotr-relics-section,
+.lotr-achievements-section {
+  padding: 16px 30px;
+  text-align: left;
+
+  .section-label {
+    font-family: $font-cinzel;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 16px 0;
+  }
+}
+
+.attributes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.attribute-card {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  .attribute-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .attr-name {
+    font-family: $font-cinzel;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #cbd5e1;
+  }
+
+  .attr-score {
+    font-family: $font-cinzel;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: $gold-bright;
+  }
+
+  .attr-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    overflow: hidden;
+
+    .attr-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #d4af37, #fbbf24);
+    }
+  }
+
+  .attr-desc {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.relics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.relic-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  .relic-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  h4 {
+    font-family: $font-cinzel;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px 0;
+  }
+
+  p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+  }
+
+  .relic-stat {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: $gold-primary;
+  }
+
+  &.mythical {
+    border-color: rgba(212, 175, 55, 0.4);
+    background: rgba(212, 175, 55, 0.05);
+  }
+}
+
+.achievements-badges-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  strong {
+    display: block;
+    font-family: $font-cinzel;
+    font-size: 0.82rem;
+    color: #ffffff;
+    margin-bottom: 2px;
+  }
+
+  span {
+    display: block;
+    font-size: 0.74rem;
+    color: #94a3b8;
+    line-height: 1.35;
+  }
+}
+
+/* Artifact Inspection Modal Content */
+.inspect-banner-frame {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  background: #080c14;
+
+  @media (max-width: 640px) {
+    height: 180px;
+  }
+}
+
+.inspect-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inspect-rarity-ribbon {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-family: $font-cinzel;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: $gold-bright;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.inspect-award-ribbon {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: rgba(234, 179, 8, 0.95);
+  color: #000;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.inspect-content-box {
+  padding: 28px 28px 36px 28px;
+  text-align: left;
+}
+
+.inspect-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+}
+
+.inspect-cat {
+  font-family: $font-cinzel;
+  font-weight: 700;
+  color: $gold-primary;
+}
+
+.inspect-client {
+  color: #94a3b8;
+}
+
+.inspect-title {
+  font-family: $font-cinzel-dec;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  line-height: 1.25;
+}
+
+.inspect-subtitle {
+  font-size: 1.05rem;
+  color: $gold-bright;
+  margin: 0 0 20px 0;
+}
+
+.inspect-gold-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.25);
+  margin-bottom: 22px;
+}
+
+.inspect-section {
+  margin-bottom: 22px;
+
+  h4 {
+    font-family: $font-cinzel;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #94a3b8;
+    margin: 0;
+  }
+}
+
+.inspect-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.inspect-metric-pill {
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  text-align: left;
+
+  strong {
+    display: block;
+    font-family: $font-cinzel;
+    font-size: 1.25rem;
+    color: $gold-bright;
+  }
+
+  span {
+    font-size: 0.76rem;
+    color: #94a3b8;
+  }
+}
+
+.inspect-tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.inspect-tag {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inspect-actions-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.inspect-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: $font-cinzel;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: all 0.18s ease;
+
+  &.primary {
+    background: linear-gradient(135deg, #d4af37, #b45309);
+    color: #000 !important;
+    &:hover { transform: translateY(-2px); }
+  }
+
+  &.youtube {
+    background: #ef4444;
+    color: #fff !important;
+    &:hover { background: #dc2626; transform: translateY(-2px); }
+  }
+
+  &.github {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    &:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+  }
+
+  &.whatsapp {
+    background: rgba(37, 211, 102, 0.15);
+    color: #25d366 !important;
+    border: 1px solid rgba(37, 211, 102, 0.35);
+    &:hover { background: #25d366; color: #fff !important; transform: translateY(-2px); }
+  }
+}
+
+/* ==========================================================================
+   9. Interactive d20 Dice Minigame
+   ========================================================================== */
+.lotr-dice-arena {
+  display: grid;
+  grid-template-columns: 0.85fr 1.35fr;
+  gap: 36px;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+.dice-display-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.lotr-d20-visual {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &.rolling {
+    animation: diceRollAnim 0.45s ease-in-out infinite;
+  }
+}
+
+@keyframes diceRollAnim {
+  0% { transform: rotate(0deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(0.9); }
+  100% { transform: rotate(360deg) scale(1.1); }
+}
+
+.d20-inner-hexagon {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  border: 3px solid $gold-primary;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+
+  .d20-number {
+    font-family: $font-cinzel-dec;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: $gold-bright;
+    line-height: 1;
+  }
+
+  .d20-label {
+    font-family: $font-cinzel;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+  }
+}
+
+.lotr-roll-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 26px;
+  border-radius: 10px;
+  font-family: $font-cinzel;
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(168, 85, 247, 0.4);
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(168, 85, 247, 0.6);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.oracle-parchment-box {
+  padding: 28px 30px;
+  border-radius: 16px;
+  background: #111724;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  .oracle-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .oracle-badge {
+    font-family: $font-cinzel;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: $gold-primary;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .oracle-speaker {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    strong { color: #f1f5f9; }
+  }
+
+  .oracle-quote {
+    font-family: $font-cinzel;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    font-style: italic;
+    margin: 0 0 20px 0;
+  }
+
+  .oracle-bonus-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .bonus-tag {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: $gold-bright;
+  }
+
+  .oracle-action-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: $font-cinzel;
+    font-weight: 700;
+    font-size: 0.84rem;
+    background: #25d366;
+    color: #ffffff !important;
+    transition: all 0.18s ease;
+
+    &:hover {
+      background: #22c55e;
+      transform: translateY(-2px);
+    }
+  }
+
+  &.critical {
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 10px 35px rgba(212, 175, 55, 0.2);
+  }
+}
+
+/* ==========================================================================
+   10. Grey Havens (Footer)
+   ========================================================================== */
+.lotr-footer-section {
+  position: relative;
+  background: #05070c;
+  padding-top: 80px;
+  overflow: hidden;
+}
+
+.lotr-footer-glow-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #d4af37 0%, #10b981 50%, #3b82f6 100%);
+}
+
+.lotr-footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 60px 24px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 1.3fr;
+  gap: 48px;
+  text-align: left;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.footer-citadel-lockup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.footer-citadel-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 3px;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.footer-kicker {
+  font-family: $font-cinzel;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: $gold-primary;
+  display: block;
+}
+
+.footer-brand-title {
+  font-family: $font-cinzel-dec;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.footer-motto {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.footer-lore-summary {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #94a3b8;
+  margin: 0;
+  max-width: 440px;
+
+  strong {
+    color: #e2e8f0;
+  }
+}
+
+.footer-section-title {
+  display: flex;
+  align-items: center;
+  font-family: $font-cinzel;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $gold-primary;
+  margin: 0 0 20px 0;
+}
+
+.footer-reigns-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li a {
+    font-family: $font-cinzel;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    transition: all 0.15s ease;
+    display: inline-block;
+
+    &:hover {
+      color: $gold-bright;
+      transform: translateX(4px);
+    }
+  }
+}
+
+.footer-runes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-rune-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-family: $font-cinzel;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.03);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.18s ease;
+
+  svg { font-size: 19px; }
+
+  &:hover {
+    background: rgba(212, 175, 55, 0.15);
+    color: $gold-bright;
+    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
+  }
+
+  &.whatsapp-gold {
+    background: rgba(37, 211, 102, 0.1);
+    color: #25d366;
+    border-color: rgba(37, 211, 102, 0.3);
+
+    &:hover {
+      background: #25d366;
+      color: #000000;
+    }
+  }
+}
+
+.lotr-footer-bottom-bar {
+  padding: 22px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.footer-bottom-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.copyright-inscription {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0;
+
+  strong {
+    color: #cbd5e1;
+  }
+}
+
+.lotr-ascend-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: $font-cinzel;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: $gold-primary;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: $gold-primary;
+    color: #000;
+    transform: translateY(-2px);
+  }
+}
